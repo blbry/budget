@@ -1,0 +1,17 @@
+{
+  "name": "blueberry-budget",
+  "version": "0.0.1",
+  "description": "Best budget app in the world",
+  "author": {
+    "name": "Blueberry",
+    "email": "me@example.com",
+    "url": "https://github.com/blbry"
+  },
+  "main": "./dist/main/main.js",
+  "scripts": {
+    "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
+    "postinstall": "npm run rebuild && npm run link-modules",
+    "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
+  },
+  "dependencies": {}
+}
