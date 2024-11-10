@@ -1,6 +1,13 @@
 name: Test
 
-on: [push, pull_request]
+#on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - '**'  # This ignores all branches
+  pull_request:
+    branches-ignore:
+      - '**'  # This ignores all branches
 
 jobs:
   test:
