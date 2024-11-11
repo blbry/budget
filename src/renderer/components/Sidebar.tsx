@@ -6,7 +6,6 @@ function Sidebar() {
   const navItems = [
     { path: '/', label: 'Dashboard' },
     { path: '/accounts', label: 'Accounts' },
-    { path: '/net-worth', label: 'Net Worth' },
     { path: '/transactions', label: 'Transactions' },
     { path: '/insights', label: 'Insights' },
     { path: '/settings', label: 'Settings' },

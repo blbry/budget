@@ -3,7 +3,6 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Accounts from './pages/Accounts';
-import NetWorth from './pages/NetWorth';
 import Settings from './pages/Settings';
 import Transactions from './pages/Transactions';
 import Insights from './pages/Insights';
@@ -19,7 +18,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/accounts" element={<Accounts />} />
-              <Route path="/net-worth" element={<NetWorth />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/insights" element={<Insights />} />
               <Route path="/settings" element={<Settings />} />
