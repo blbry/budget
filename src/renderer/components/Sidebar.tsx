@@ -71,6 +71,7 @@ function Sidebar() {
           </Link>
         ) : (
           <button
+            type="button"
             onClick={() => toggleSection(sectionId)}
             className="w-full text-left px-4 py-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded transition-colors"
             style={{ paddingLeft: `${level * 12 + 16}px` }}

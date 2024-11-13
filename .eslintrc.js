@@ -17,12 +17,6 @@ module.exports = {
     'css-modules/no-undef-class': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     'prettier/prettier': 'off',
-    'css/at-rule-no-unknown': [
-      true,
-      {
-        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen', 'layer'],
-      },
-    ],
   },
   parserOptions: {
     ecmaVersion: 2022,
