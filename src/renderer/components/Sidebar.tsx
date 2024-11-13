@@ -82,7 +82,8 @@ function Sidebar() {
         {hasChildren && isExpanded && item.children && (
           <div className="relative">
             <div
-              className="absolute left-[22px] top-0 bottom-0 border-l border-muted-foreground/20"
+              className="absolute top-0 bottom-0 border-l border-muted-foreground/20"
+              style={{ left: `${level * 12 + 16}px` }}
             />
             <div className="py-1">
               {item.children.map((child) => renderNavItem(child, level + 1))}
