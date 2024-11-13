@@ -22,6 +22,9 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
+  app: {
+    getVersion: () => ipcRenderer.invoke('app:get-version'),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
