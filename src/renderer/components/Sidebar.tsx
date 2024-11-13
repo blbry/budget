@@ -82,7 +82,7 @@ function Sidebar() {
         {hasChildren && isExpanded && item.children && (
           <div className="relative">
             <div
-              className="absolute top-0 bottom-0 border-l border-muted-foreground/20"
+              className="absolute top-[0.75rem] bottom-[0.75rem] border-l border-muted-foreground/20"
               style={{ left: `${level * 12 + 16}px` }}
             />
             <div className="py-1">
@@ -95,14 +95,16 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-64 h-full">
-      <div className="pt-2 px-2">
-        <div className="mb-8">
-          <h1 className="text-xl font-bold text-foreground">Blueberry Budget</h1>
+    <div className="w-64 flex-shrink-0 overflow-hidden flex flex-col">
+      <div className="flex-1 overflow-y-auto">
+        <div className="pt-2 px-2">
+          <div className="mb-8">
+            <h1 className="text-xl font-bold text-foreground">Blueberry Budget</h1>
+          </div>
+          <nav className="space-y-2">
+            {navItems.map((item) => renderNavItem(item))}
+          </nav>
         </div>
-        <nav className="space-y-2">
-          {navItems.map((item) => renderNavItem(item))}
-        </nav>
       </div>
     </div>
   );
