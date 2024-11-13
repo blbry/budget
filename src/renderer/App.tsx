@@ -12,9 +12,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="flex">
+        <div className="flex h-screen bg-muted p-4">
           <Sidebar />
-          <main className="flex-1">
+          <main className="flex-1 bg-background ml-4 rounded-2xl">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/accounts" element={<Accounts />} />
