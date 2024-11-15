@@ -16,6 +16,7 @@ module.exports = {
     'css-modules/no-unused-class': 'off',
     'css-modules/no-undef-class': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    "import/prefer-default-export": "off",
     'prettier/prettier': 'off',
   },
   parserOptions: {

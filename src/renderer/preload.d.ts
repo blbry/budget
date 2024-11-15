@@ -1,3 +1,5 @@
+import { PaymentMethod, PaymentMethodFormData, Category } from "@/shared/types";
+
 export interface ElectronHandler {
   ipcRenderer: {
     sendMessage(channel: string, ...args: unknown[]): void;
@@ -11,7 +13,17 @@ export interface ElectronHandler {
 
 declare global {
   interface Window {
-    electron: ElectronHandler;
+    electron: {
+      paymentMethods: {
+        getAll: () => Promise<PaymentMethod[]>;
+        create: (data: PaymentMethodFormData) => Promise<number>;
+        update: (id: number, data: PaymentMethodFormData) => Promise<void>;
+        delete: (id: number) => Promise<void>;
+      };
+      categories: {
+        getAll: () => Promise<Category[]>;
+      };
+    };
   }
 }
 

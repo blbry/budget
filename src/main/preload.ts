@@ -25,6 +25,15 @@ const electronHandler = {
   app: {
     getVersion: () => ipcRenderer.invoke('app:get-version'),
   },
+  paymentMethods: {
+    getAll: () => ipcRenderer.invoke('payment-methods:getAll'),
+    create: (data: unknown) => ipcRenderer.invoke('payment-methods:create', data),
+    update: (id: number, data: unknown) => ipcRenderer.invoke('payment-methods:update', id, data),
+    delete: (id: number) => ipcRenderer.invoke('payment-methods:delete', id)
+  },
+  categories: {
+    getAll: () => ipcRenderer.invoke('categories:getAll')
+  }
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
