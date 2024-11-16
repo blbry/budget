@@ -1,9 +1,22 @@
-import { useTheme } from '../components/ThemeProvider';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable promise/catch-or-return */
 import { useState, useEffect } from 'react';
+import { useTheme } from '../components/ThemeProvider';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/select';
+import { Button } from '../components/button';
+import { UnitsIcon } from '../components/icons/UnitsIcon';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
   const [version, setVersion] = useState<string>('');
+  const [dateFormat, setDateFormat] = useState('MM/DD/YYYY');
+  const [currencyFormat, setCurrencyFormat] = useState('USD');
 
   useEffect(() => {
     window.electron.app.getVersion().then(setVersion);
@@ -20,39 +33,47 @@ export default function Settings() {
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Theme</label>
-              <select
-                value={theme}
-                onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
-                className="p-2 rounded-md border bg-background"
-              >
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-              </select>
+              <Select defaultValue={theme} onValueChange={(value) => setTheme(value as 'light' | 'dark' | 'system')}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Date Format</label>
-              <select
-                className="p-2 rounded-md border bg-background"
-                defaultValue="MM/DD/YYYY"
-              >
-                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-              </select>
+              <Select defaultValue={dateFormat} onValueChange={setDateFormat}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select date format" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
+                  <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
+                  <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Currency Format</label>
-              <select
-                className="p-2 rounded-md border bg-background"
-                defaultValue="USD"
-              >
-                <option value="USD">US Dollar ($)</option>
-                <option value="EUR">Euro (€)</option>
-                <option value="GBP">British Pound (£)</option>
-              </select>
+              <Select defaultValue={currencyFormat} onValueChange={setCurrencyFormat}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="USD">US Dollar ($)</SelectItem>
+                  <SelectItem value="EUR">Euro (€)</SelectItem>
+                  <SelectItem value="GBP">British Pound (£)</SelectItem>
+                  <SelectItem value="NMS">
+                    No Man&apos;s Sky Units (<UnitsIcon />)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </section>
@@ -61,12 +82,8 @@ export default function Settings() {
         <section>
           <h2 className="text-lg font-semibold mb-4">Data Management</h2>
           <div className="flex gap-4">
-            <button className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
-              Export Data
-            </button>
-            <button className="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90">
-              Restore Data
-            </button>
+            <Button variant="outline">Export Data</Button>
+            <Button variant="destructive">Restore Data</Button>
           </div>
         </section>
 

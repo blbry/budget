@@ -23,6 +23,9 @@ declare global {
       categories: {
         getAll: () => Promise<Category[]>;
       };
+      app: {
+        getVersion: () => Promise<string>;
+      };
     };
   }
 }
