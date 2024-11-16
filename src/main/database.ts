@@ -22,6 +22,8 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     parent_id INTEGER,
+    type TEXT NOT NULL DEFAULT 'expense' CHECK(type IN ('expense', 'income', 'asset')),
+    is_default BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY (parent_id) REFERENCES categories(id)
   );
 
@@ -48,10 +50,19 @@ db.exec(`
   );
 
   -- Insert default categories if they don't exist
-  INSERT OR IGNORE INTO categories (id, name, parent_id) VALUES
-    (1, 'Living Expenses', NULL),
-    (2, 'Groceries', 1),
-    (3, 'Internet', 1);
+  INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
+    -- Recreation
+    (1, 'Recreation', NULL, 'expense', 1),
+    (2, 'Other', 1, 'expense', 1),
+
+    -- Living Expenses
+    (3, 'Living Expenses', NULL, 'expense', 1),
+    (4, 'Other', 3, 'expense', 1),
+    (5, 'Housing', 3, 'expense', 1),
+    (6, 'Home Insurance', 3, 'expense', 1),
+    (7, 'Utilities', 3, 'expense', 1),
+    (8, 'Groceries', 3, 'expense', 1),
+    (9, 'Restaurants', 3, 'expense', 1);
 
   -- Insert default cash payment method if it doesn't exist
   INSERT OR IGNORE INTO payment_methods (id, type, name) VALUES (1, 'cash', 'Cash');

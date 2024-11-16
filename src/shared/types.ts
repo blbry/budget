@@ -1,7 +1,9 @@
 export interface Category {
   id: number;
   name: string;
-  parent_id?: number;
+  parent_id: number | null;
+  type: 'expense' | 'income' | 'asset';
+  is_default: boolean;
 }
 
 export interface Reward {

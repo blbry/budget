@@ -9,6 +9,12 @@ export interface ElectronHandler {
   app: {
     getVersion(): Promise<string>;
   };
+  categories: {
+    getAll: () => Promise<Category[]>;
+    create: (data: Omit<Category, 'id'>) => Promise<number>;
+    update: (id: number, name: string) => Promise<void>;
+    delete: (id: number) => Promise<void>;
+  };
 }
 
 declare global {
@@ -22,6 +28,9 @@ declare global {
       };
       categories: {
         getAll: () => Promise<Category[]>;
+        create: (data: Omit<Category, 'id'>) => Promise<number>;
+        update: (id: number, name: string) => Promise<void>;
+        delete: (id: number) => Promise<void>;
       };
       app: {
         getVersion: () => Promise<string>;

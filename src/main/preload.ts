@@ -32,7 +32,10 @@ const electronHandler = {
     delete: (id: number) => ipcRenderer.invoke('payment-methods:delete', id)
   },
   categories: {
-    getAll: () => ipcRenderer.invoke('categories:getAll')
+    getAll: () => ipcRenderer.invoke('categories:getAll'),
+    create: (data: unknown) => ipcRenderer.invoke('categories:create', data),
+    update: (id: number, name: string) => ipcRenderer.invoke('categories:update', id, name),
+    delete: (id: number) => ipcRenderer.invoke('categories:delete', id)
   }
 };
 
