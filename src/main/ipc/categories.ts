@@ -4,7 +4,25 @@ import db from '../database';
 
 export function setupCategoriesHandlers() {
   ipcMain.handle('categories:getAll', () => {
-    const stmt = db.prepare('SELECT * FROM categories ORDER BY parent_id, name');
+    const stmt = db.prepare(`
+      WITH RECURSIVE CategoryHierarchy AS (
+        -- Base case: Get all root categories
+        SELECT id, name, parent_id, type, is_default, 0 as level, name as sort_path
+        FROM categories
+        WHERE parent_id IS NULL
+
+        UNION ALL
+
+        -- Recursive case: Get child categories
+        SELECT c.id, c.name, c.parent_id, c.type, c.is_default, ch.level + 1,
+               ch.sort_path || '/' || c.name
+        FROM categories c
+        JOIN CategoryHierarchy ch ON c.parent_id = ch.id
+      )
+      SELECT id, name, parent_id, type, is_default
+      FROM CategoryHierarchy
+      ORDER BY sort_path;
+    `);
     return stmt.all();
   });
 
