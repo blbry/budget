@@ -35,6 +35,8 @@ const formSchema = z.object({
   statementDate: z.number().min(1).max(31).nullable(),
   paymentAccount: z.string().optional(),
   annualFee: z.number().min(0).nullable(),
+  tickerSymbol: z.string().optional(),
+  walletAddress: z.string().optional(),
   rewards: z.array(z.object({
     id: z.number().optional(),
     payment_method_id: z.number(),
@@ -62,6 +64,8 @@ export default function PaymentMethodDialog({ open, onClose, paymentMethod }: Pr
       statementDate: 1,
       paymentAccount: '',
       annualFee: 0,
+      tickerSymbol: '',
+      walletAddress: '',
       rewards: []
     }
   });
@@ -82,6 +86,8 @@ export default function PaymentMethodDialog({ open, onClose, paymentMethod }: Pr
         statementDate: paymentMethod.statementDate ?? null,
         paymentAccount: paymentMethod.paymentAccount ?? '',
         annualFee: paymentMethod.annualFee ?? null,
+        tickerSymbol: paymentMethod.tickerSymbol ?? '',
+        walletAddress: paymentMethod.walletAddress ?? '',
         rewards: paymentMethod.rewards ?? []
       });
     } else {
@@ -91,6 +97,8 @@ export default function PaymentMethodDialog({ open, onClose, paymentMethod }: Pr
         statementDate: 1,
         paymentAccount: '',
         annualFee: 0,
+        tickerSymbol: '',
+        walletAddress: '',
         rewards: []
       });
     }
@@ -164,6 +172,38 @@ export default function PaymentMethodDialog({ open, onClose, paymentMethod }: Pr
                 </FormItem>
               )}
             />
+
+            {form.watch('type') === 'crypto' && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="tickerSymbol"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ticker Symbol</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., BTC" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="walletAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Wallet Address</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
 
             {form.watch('type') === 'credit' && (
               <>

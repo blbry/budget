@@ -20,6 +20,8 @@ export interface PaymentMethod {
   statementDate?: number;
   paymentAccount?: string;
   annualFee?: number;
+  tickerSymbol?: string;
+  walletAddress?: string;
   rewards?: Reward[];
 }
 
@@ -29,5 +31,7 @@ export interface PaymentMethodFormData {
   statementDate?: number | null;
   paymentAccount?: string;
   annualFee?: number | null;
+  tickerSymbol?: string;
+  walletAddress?: string;
   rewards?: Reward[];
 }

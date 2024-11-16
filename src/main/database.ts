@@ -31,7 +31,9 @@ db.exec(`
     name TEXT NOT NULL,
     statementDate INTEGER,
     paymentAccount TEXT,
-    annualFee REAL
+    annualFee REAL,
+    tickerSymbol TEXT,
+    walletAddress TEXT
   );
 
   CREATE TABLE IF NOT EXISTS rewards (

@@ -9,6 +9,8 @@ interface DBPaymentMethod {
   statementDate: number | null;
   paymentAccount: string | null;
   annualFee: number | null;
+  tickerSymbol: string | null;
+  walletAddress: string | null;
   rewards: string;
 }
 
@@ -28,7 +30,9 @@ export function setupPaymentMethodsHandlers() {
         ) as rewards
       FROM payment_methods pm
       LEFT JOIN rewards r ON pm.id = r.payment_method_id
-      GROUP BY pm.id
+      GROUP BY pm.id, pm.type, pm.name, pm.statementDate,
+               pm.paymentAccount, pm.annualFee, pm.tickerSymbol,
+               pm.walletAddress
       ORDER BY pm.id ASC
     `);
 
@@ -40,6 +44,8 @@ export function setupPaymentMethodsHandlers() {
       statementDate: method.statementDate,
       paymentAccount: method.paymentAccount,
       annualFee: method.annualFee,
+      tickerSymbol: method.tickerSymbol,
+      walletAddress: method.walletAddress,
       rewards: JSON.parse(method.rewards).filter((r: Reward) => r.id !== null)
     }));
   });
@@ -49,8 +55,9 @@ export function setupPaymentMethodsHandlers() {
       const methodStmt = db.prepare(`
         INSERT INTO payment_methods (
           type, name, statementDate,
-          paymentAccount, annualFee
-        ) VALUES (?, ?, ?, ?, ?)
+          paymentAccount, annualFee,
+          tickerSymbol, walletAddress
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
       `);
 
       const result = methodStmt.run(
@@ -58,7 +65,9 @@ export function setupPaymentMethodsHandlers() {
         data.name,
         data.statementDate,
         data.paymentAccount,
-        data.annualFee
+        data.annualFee,
+        data.tickerSymbol,
+        data.walletAddress
       );
 
       if (data.rewards && Array.isArray(data.rewards) && data.rewards.length > 0) {
@@ -89,7 +98,8 @@ export function setupPaymentMethodsHandlers() {
       const methodStmt = db.prepare(`
         UPDATE payment_methods
         SET type = ?, name = ?, statementDate = ?,
-            paymentAccount = ?, annualFee = ?
+            paymentAccount = ?, annualFee = ?,
+            tickerSymbol = ?, walletAddress = ?
         WHERE id = ?
       `);
 
@@ -99,6 +109,8 @@ export function setupPaymentMethodsHandlers() {
         data.statementDate,
         data.paymentAccount,
         data.annualFee,
+        data.tickerSymbol,
+        data.walletAddress,
         id
       );
 
