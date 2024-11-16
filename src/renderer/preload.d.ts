@@ -15,6 +15,10 @@ export interface ElectronHandler {
     update: (id: number, name: string) => Promise<void>;
     delete: (id: number) => Promise<void>;
   };
+  settings: {
+    getAll: () => Promise<Record<string, string>>;
+    update: (key: string, value: string) => Promise<void>;
+  };
 }
 
 declare global {
@@ -34,6 +38,10 @@ declare global {
       };
       app: {
         getVersion: () => Promise<string>;
+      };
+      settings: {
+        getAll: () => Promise<Record<string, string>>;
+        update: (key: string, value: string) => Promise<void>;
       };
     };
   }

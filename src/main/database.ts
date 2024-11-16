@@ -49,6 +49,11 @@ db.exec(`
     FOREIGN KEY (category_id) REFERENCES categories(id)
   );
 
+  CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+  );
+
   -- Insert default categories if they don't exist
   INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
     -- Recreation
@@ -66,6 +71,13 @@ db.exec(`
 
   -- Insert default cash payment method if it doesn't exist
   INSERT OR IGNORE INTO payment_methods (id, type, name) VALUES (1, 'cash', 'Cash');
+
+  -- Insert default settings if they don't exist
+  INSERT OR IGNORE INTO settings (key, value) VALUES
+    ('theme', 'system'),
+    ('dateFormat', 'MM/DD/YYYY'),
+    ('currencyFormat', 'USD'),
+    ('location', 'NY');
 `);
 
 export default db;

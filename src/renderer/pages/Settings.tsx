@@ -18,11 +18,43 @@ export default function Settings() {
   const [version, setVersion] = useState<string>('');
   const [dateFormat, setDateFormat] = useState('MM/DD/YYYY');
   const [currencyFormat, setCurrencyFormat] = useState('USD');
-  const [location, setLocation] = useState('CA');
+  const [location, setLocation] = useState('NY');
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const settings = await window.electron.settings.getAll();
+      setTheme(settings.theme as 'light' | 'dark' | 'system');
+      setDateFormat(settings.dateFormat);
+      setCurrencyFormat(settings.currencyFormat);
+      setLocation(settings.location);
+    };
+
+    loadSettings();
+  }, [setTheme]);
 
   useEffect(() => {
     window.electron.app.getVersion().then(setVersion);
   }, []);
+
+  const handleThemeChange = (value: string) => {
+    setTheme(value as 'light' | 'dark' | 'system');
+    window.electron.settings.update('theme', value);
+  };
+
+  const handleDateFormatChange = (value: string) => {
+    setDateFormat(value);
+    window.electron.settings.update('dateFormat', value);
+  };
+
+  const handleCurrencyFormatChange = (value: string) => {
+    setCurrencyFormat(value);
+    window.electron.settings.update('currencyFormat', value);
+  };
+
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+    window.electron.settings.update('location', value);
+  };
 
   const states = [
     { value: 'AL', label: 'Alabama' },
@@ -88,7 +120,7 @@ export default function Settings() {
           <div className="space-y-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Theme</label>
-              <Select defaultValue={theme} onValueChange={(value) => setTheme(value as 'light' | 'dark' | 'system')}>
+              <Select value={theme} onValueChange={handleThemeChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select theme" />
                 </SelectTrigger>
@@ -102,7 +134,7 @@ export default function Settings() {
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Date Format</label>
-              <Select defaultValue={dateFormat} onValueChange={setDateFormat}>
+              <Select value={dateFormat} onValueChange={handleDateFormatChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select date format" />
                 </SelectTrigger>
@@ -116,7 +148,7 @@ export default function Settings() {
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Currency Format</label>
-              <Select defaultValue={currencyFormat} onValueChange={setCurrencyFormat}>
+              <Select value={currencyFormat} onValueChange={handleCurrencyFormatChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select currency" />
                 </SelectTrigger>
@@ -134,7 +166,7 @@ export default function Settings() {
             <div className="space-y-2">
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-medium">Location</label>
-                <Select defaultValue={location} onValueChange={setLocation}>
+                <Select value={location} onValueChange={handleLocationChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
@@ -168,11 +200,8 @@ export default function Settings() {
         {/* About Section */}
         <section>
           <h2 className="text-lg font-semibold mb-4">About</h2>
+          <p className="text-sm text-muted-foreground">Version: {version}</p>
           <div className="space-y-2">
-            <div>
-              <span className="text-sm text-muted-foreground">Version: </span>
-              <span className="text-sm">{version}</span>
-            </div>
             <div>
               <span className="text-sm text-muted-foreground">Made with ❤️ by </span>
               <a

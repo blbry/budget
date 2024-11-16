@@ -16,6 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { setupPaymentMethodsHandlers } from './ipc/paymentMethods';
 import { setupCategoriesHandlers } from './ipc/categories';
+import { setupSettingsHandlers } from './ipc/settings';
 
 class AppUpdater {
   constructor() {
@@ -64,6 +65,7 @@ const installExtensions = async () => {
 
 setupPaymentMethodsHandlers();
 setupCategoriesHandlers();
+setupSettingsHandlers();
 
 const createWindow = async () => {
   if (isDebug) {

@@ -36,7 +36,12 @@ const electronHandler = {
     create: (data: unknown) => ipcRenderer.invoke('categories:create', data),
     update: (id: number, name: string) => ipcRenderer.invoke('categories:update', id, name),
     delete: (id: number) => ipcRenderer.invoke('categories:delete', id)
-  }
+  },
+  settings: {
+    getAll: () => ipcRenderer.invoke('settings:getAll'),
+    update: (key: string, value: string) =>
+      ipcRenderer.invoke('settings:update', key, value),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
