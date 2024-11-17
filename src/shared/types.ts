@@ -37,3 +37,51 @@ export interface PaymentMethodFormData {
   walletAddress?: string;
   rewards?: Reward[];
 }
+
+export interface IncomeDeduction {
+  id?: number;
+  source_id: number;
+  name: string;
+  type: 'credit' | 'deduction';
+  format: 'percent' | 'amount';
+  value: number;
+  frequency: 'per_paycheck' | 'monthly' | 'annually';
+}
+
+export interface Income {
+  id: number;
+  name: string;
+  type: 'employment' | 'other_recurring' | 'simple';
+  frequency?: 'weekly' | 'biweekly' | 'monthly' | 'semimonthly' | 'quarterly' | 'annually' | 'none';
+  amount: number;
+  pay_date?: number;
+  next_payment_date?: string;
+  monthly_totals: string;
+  deductions?: IncomeDeduction[];
+}
+
+export interface MonthlyTotals {
+  [year: string]: {
+    [month: string]: {
+      [category: string]: number;
+    };
+  };
+}
+
+export interface DeductionFormData {
+  name: string;
+  type: 'credit' | 'deduction';
+  format: 'percent' | 'amount';
+  value: number;
+  frequency: 'per_paycheck' | 'monthly' | 'annually';
+}
+
+export interface IncomeFormData {
+  name: string;
+  type: 'employment' | 'other_recurring' | 'simple';
+  frequency?: 'weekly' | 'biweekly' | 'monthly' | 'semimonthly' | 'quarterly' | 'annually' | 'none';
+  amount?: number;
+  pay_date?: string;
+  next_payment_date?: string;
+  deductions?: DeductionFormData[];
+}

@@ -54,6 +54,28 @@ db.exec(`
     value TEXT NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS income (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('employment', 'other_recurring', 'simple')),
+    frequency TEXT CHECK(frequency IN ('weekly', 'biweekly', 'monthly', 'semimonthly', 'quarterly', 'annually', 'none')),
+    amount REAL DEFAULT 0,
+    pay_date INTEGER,
+    monthly_totals TEXT DEFAULT '{}',
+    next_payment_date TEXT
+  );
+
+  CREATE TABLE IF NOT EXISTS income_deductions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('credit', 'deduction')),
+    format TEXT NOT NULL CHECK(format IN ('percent', 'amount')),
+    value REAL NOT NULL,
+    frequency TEXT NOT NULL CHECK(frequency IN ('per_paycheck', 'monthly', 'annually')),
+    FOREIGN KEY (source_id) REFERENCES income(id) ON DELETE CASCADE
+  );
+
   -- Insert default categories if they don't exist
   INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
     -- Recreation

@@ -42,6 +42,14 @@ const electronHandler = {
     update: (key: string, value: string) =>
       ipcRenderer.invoke('settings:update', key, value),
   },
+  income: {
+    getAll: () => ipcRenderer.invoke('income:getAll'),
+    create: (data: unknown) => ipcRenderer.invoke('income:create', data),
+    update: (id: number, data: unknown) => ipcRenderer.invoke('income:update', id, data),
+    delete: (id: number) => ipcRenderer.invoke('income:delete', id),
+    updateMonthlyTotals: (id: number, totals: string) =>
+      ipcRenderer.invoke('income:updateMonthlyTotals', id, totals),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
