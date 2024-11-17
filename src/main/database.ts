@@ -76,6 +76,16 @@ db.exec(`
     FOREIGN KEY (source_id) REFERENCES income(id) ON DELETE CASCADE
   );
 
+  CREATE TABLE IF NOT EXISTS accounts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('crypto', 'bank')),
+    ticker TEXT DEFAULT 'BTC',
+    wallet_addr TEXT,
+    balance REAL DEFAULT 0,
+    balance_updated TEXT
+  );
+
   -- Insert default categories if they don't exist
   INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
     -- Recreation

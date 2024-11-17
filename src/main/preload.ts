@@ -1,6 +1,7 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { Account, AccountFormData } from '@/shared/types';
 
 export type Channels = 'ipc-example';
 
@@ -49,6 +50,11 @@ const electronHandler = {
     delete: (id: number) => ipcRenderer.invoke('income:delete', id),
     updateMonthlyTotals: (id: number, totals: string) =>
       ipcRenderer.invoke('income:updateMonthlyTotals', id, totals),
+  },
+  accounts: {
+    getAll: () => ipcRenderer.invoke('accounts:getAll') as Promise<Account[]>,
+    create: (data: AccountFormData) => ipcRenderer.invoke('accounts:create', data),
+    delete: (id: number) => ipcRenderer.invoke('accounts:delete', id),
   },
 };
 

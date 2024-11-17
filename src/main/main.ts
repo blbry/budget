@@ -18,6 +18,7 @@ import { setupPaymentMethodsHandlers } from './ipc/paymentMethods';
 import { setupCategoriesHandlers } from './ipc/categories';
 import { setupSettingsHandlers } from './ipc/settings';
 import { setupIncomeHandlers } from './ipc/income';
+import { setupAccountsHandlers } from './ipc/accounts';
 
 class AppUpdater {
   constructor() {
@@ -68,6 +69,7 @@ setupPaymentMethodsHandlers();
 setupCategoriesHandlers();
 setupSettingsHandlers();
 setupIncomeHandlers();
+setupAccountsHandlers();
 
 const createWindow = async () => {
   if (isDebug) {

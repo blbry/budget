@@ -85,3 +85,20 @@ export interface IncomeFormData {
   next_payment_date?: string;
   deductions?: DeductionFormData[];
 }
+
+export interface Account {
+  id: number;
+  name: string;
+  type: 'crypto' | 'bank';
+  ticker?: string;
+  wallet_addr?: string;
+  balance: number;
+  balance_updated: string;
+}
+
+export interface AccountFormData {
+  name: string;
+  type: 'crypto' | 'bank';
+  wallet_addr?: string;
+  balance?: number;
+}
