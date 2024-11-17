@@ -8,7 +8,6 @@ import Accounts from './pages/assets/Accounts';
 import Vehicles from './pages/assets/Vehicles';
 import Properties from './pages/assets/Properties';
 import Investments from './pages/assets/Investments';
-import Debt from './pages/assets/Debt';
 import Transactions from './pages/spending/Transactions';
 import Categories from './pages/spending/Categories';
 import PaymentMethods from './pages/spending/PaymentMethods';
@@ -30,7 +29,6 @@ export default function App() {
                 <Route path="/assets/vehicles" element={<Vehicles />} />
                 <Route path="/assets/properties" element={<Properties />} />
                 <Route path="/assets/investments" element={<Investments />} />
-                <Route path="/assets/debt" element={<Debt />} />
                 <Route path="/income" element={<Income />} />
                 <Route path="/spending/transactions" element={<Transactions />} />
                 <Route path="/spending/categories" element={<Categories />} />

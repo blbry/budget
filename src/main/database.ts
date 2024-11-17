@@ -97,6 +97,15 @@ db.exec(`
     description TEXT
   );
 
+  CREATE TABLE IF NOT EXISTS investments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    ticker TEXT NOT NULL,
+    value REAL DEFAULT 0,
+    monthly_totals TEXT DEFAULT '{}',
+    last_updated TEXT
+  );
+
   -- Insert default categories if they don't exist
   INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
     -- Recreation

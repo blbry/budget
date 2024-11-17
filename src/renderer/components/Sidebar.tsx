@@ -20,7 +20,6 @@ function Sidebar() {
         { path: '/assets/vehicles', label: 'Vehicles' },
         { path: '/assets/properties', label: 'Properties' },
         { path: '/assets/investments', label: 'Investments' },
-        { path: '/assets/debt', label: 'Debt' },
       ],
     },
     { path: '/income', label: 'Income' },

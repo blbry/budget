@@ -123,3 +123,18 @@ export interface VehicleFormData {
   payment_amount?: number;
   description?: string;
 }
+
+export interface Investment {
+  id: number;
+  name: string;
+  ticker: string;
+  value: number;
+  monthly_totals: string;
+  last_updated: string;
+}
+
+export interface InvestmentFormData {
+  name: string;
+  ticker: string;
+  value: number;
+}

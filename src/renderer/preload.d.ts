@@ -1,4 +1,4 @@
-import { PaymentMethod, PaymentMethodFormData, Category, Income, IncomeFormData, Account, AccountFormData, Vehicle, VehicleFormData } from "@/shared/types";
+import { PaymentMethod, PaymentMethodFormData, Category, Income, IncomeFormData, Account, AccountFormData, Vehicle, VehicleFormData, Investment, InvestmentFormData } from "@/shared/types";
 
 export interface ElectronHandler {
   ipcRenderer: {
@@ -36,6 +36,13 @@ export interface ElectronHandler {
     create: (data: VehicleFormData) => Promise<number>;
     update: (id: number, data: VehicleFormData) => Promise<void>;
     delete: (id: number) => Promise<void>;
+  };
+  investments: {
+    getAll: () => Promise<Investment[]>;
+    create: (data: InvestmentFormData) => Promise<number>;
+    update: (id: number, data: InvestmentFormData) => Promise<void>;
+    delete: (id: number) => Promise<void>;
+    updateMonthlyTotals: (id: number, totals: string) => Promise<void>;
   };
 }
 
@@ -78,6 +85,13 @@ declare global {
         create: (data: VehicleFormData) => Promise<number>;
         update: (id: number, data: VehicleFormData) => Promise<void>;
         delete: (id: number) => Promise<void>;
+      };
+      investments: {
+        getAll: () => Promise<Investment[]>;
+        create: (data: InvestmentFormData) => Promise<number>;
+        update: (id: number, data: InvestmentFormData) => Promise<void>;
+        delete: (id: number) => Promise<void>;
+        updateMonthlyTotals: (id: number, totals: string) => Promise<void>;
       };
     };
   }
