@@ -12,6 +12,7 @@ import {
 import { Button } from '@/renderer/components/button';
 import { UnitsIcon } from '@/renderer/components/icons/UnitsIcon';
 import { Alert, AlertDescription } from '@/renderer/components/alert';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
@@ -19,6 +20,7 @@ export default function Settings() {
   const [dateFormat, setDateFormat] = useState('MM/DD/YYYY');
   const [currencyFormat, setCurrencyFormat] = useState('USD');
   const [location, setLocation] = useState('NY');
+  const { setCurrencyFormat: setGlobalCurrencyFormat } = useCurrency();
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -48,6 +50,7 @@ export default function Settings() {
 
   const handleCurrencyFormatChange = (value: string) => {
     setCurrencyFormat(value);
+    setGlobalCurrencyFormat(value);
     window.electron.settings.update('currencyFormat', value);
   };
 
@@ -161,6 +164,11 @@ export default function Settings() {
                   </SelectItem>
                 </SelectContent>
               </Select>
+              <Alert>
+                <AlertDescription>
+                  Currency conversion is symbolic only - it changes the display format but does not perform actual conversion.
+                </AlertDescription>
+              </Alert>
             </div>
 
             <div className="space-y-2">

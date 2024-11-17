@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PaymentMethod } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 import {
   Table,
   TableBody,
@@ -31,6 +32,7 @@ export default function PaymentMethods() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+  const { formatAmount } = useCurrency();
 
   const loadPaymentMethods = async () => {
     const methods = await window.electron.paymentMethods.getAll();
@@ -90,7 +92,7 @@ export default function PaymentMethods() {
               </TableCell>
               <TableCell>
                 {method.type === 'credit' && method.annualFee != null
-                  ? `$${method.annualFee}`
+                  ? formatAmount(method.annualFee)
                   : '-'}
               </TableCell>
               <TableCell>

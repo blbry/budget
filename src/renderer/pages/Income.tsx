@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Income, MonthlyTotals } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 import {
   Table,
   TableBody,
@@ -23,6 +24,7 @@ export default function IncomePage() {
     id: number;
     amount: number;
   } | null>(null);
+  const { formatAmount } = useCurrency();
 
   const loadIncomeSources = async () => {
     const sources = await window.electron.income.getAll();
@@ -124,7 +126,7 @@ export default function IncomePage() {
               <TableRow key={source.id}>
                 <TableCell>{source.name}</TableCell>
                 <TableCell>
-                  ${getCurrentMonthTotal(source.monthly_totals, source.name).toFixed(2)}
+                  {formatAmount(getCurrentMonthTotal(source.monthly_totals, source.name))}
                 </TableCell>
                 <TableCell>
                   <Button
@@ -165,7 +167,7 @@ export default function IncomePage() {
                   {source.frequency || '-'}
                 </TableCell>
                 <TableCell>
-                  {source.amount ? `$${source.amount.toFixed(2)}` : '-'}
+                  {source.amount ? formatAmount(source.amount) : '-'}
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-2">

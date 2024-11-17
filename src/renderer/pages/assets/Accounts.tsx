@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Account } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 import {
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import AccountDialog from '@/renderer/components/AccountDialog';
 export default function Accounts() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { formatAmount } = useCurrency();
 
   const loadAccounts = async () => {
     const accts = await window.electron.accounts.getAll();
@@ -53,7 +55,7 @@ export default function Accounts() {
             <TableRow key={account.id}>
               <TableCell>{account.name}</TableCell>
               <TableCell className="capitalize">{account.type}</TableCell>
-              <TableCell>${account.balance.toFixed(2)}</TableCell>
+              <TableCell>{formatAmount(account.balance)}</TableCell>
               <TableCell>
                 {new Date(account.balance_updated).toLocaleDateString()}
               </TableCell>

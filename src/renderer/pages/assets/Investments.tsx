@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Investment } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 import {
   Table,
   TableBody,
@@ -22,6 +23,7 @@ export default function Investments() {
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedInvestment, setSelectedInvestment] = useState<Investment | null>(null);
+  const { formatAmount } = useCurrency();
 
   const loadInvestments = async () => {
     const invs = await window.electron.investments.getAll();
@@ -74,7 +76,7 @@ export default function Investments() {
             <TableRow key={investment.id}>
               <TableCell>{investment.name}</TableCell>
               <TableCell>{investment.ticker}</TableCell>
-              <TableCell>${investment.value.toFixed(2)}</TableCell>
+              <TableCell>{formatAmount(investment.value)}</TableCell>
               <TableCell>
                 {format(new Date(investment.last_updated), 'MM/dd/yyyy')}
               </TableCell>

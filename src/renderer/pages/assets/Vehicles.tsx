@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Vehicle } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
 import {
   Table,
   TableBody,
@@ -31,6 +32,7 @@ export default function Vehicles() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const { formatAmount } = useCurrency();
 
   const loadVehicles = async () => {
     const vehs = await window.electron.vehicles.getAll();
@@ -85,12 +87,20 @@ export default function Vehicles() {
               <TableCell>{vehicle.name}</TableCell>
               <TableCell className="capitalize">{vehicle.ownership_type}</TableCell>
               <TableCell>
-                {vehicle.value ? `$${vehicle.value.toFixed(2)}` : '-'}
+                {vehicle.value ? formatAmount(vehicle.value) : '-'}
               </TableCell>
               <TableCell>
-                {vehicle.payment_amount && vehicle.payment_date
-                  ? `$${vehicle.payment_amount.toFixed(2)} (${vehicle.payment_date}${getOrdinalSuffix(vehicle.payment_date)})`
-                  : '-'}
+                {vehicle.payment_amount && vehicle.payment_date ? (
+                  <span className="flex items-center gap-1">
+                    {formatAmount(vehicle.payment_amount)}
+                    <span className="ml-1">
+                      ({vehicle.payment_date}
+                      {getOrdinalSuffix(vehicle.payment_date)})
+                    </span>
+                  </span>
+                ) : (
+                  '-'
+                )}
               </TableCell>
               <TableCell>
                 {vehicle.remaining_payments ?? '-'}

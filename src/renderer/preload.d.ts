@@ -1,3 +1,4 @@
+import { IpcRendererEvent } from 'electron';
 import { PaymentMethod, PaymentMethodFormData, Category, Income, IncomeFormData, Account, AccountFormData, Vehicle, VehicleFormData, Investment, InvestmentFormData } from "@/shared/types";
 
 export interface ElectronHandler {
@@ -18,6 +19,8 @@ export interface ElectronHandler {
   settings: {
     getAll: () => Promise<Record<string, string>>;
     update: (key: string, value: string) => Promise<void>;
+    onUpdate: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => void;
+    removeUpdateListener: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => void;
   };
   income: {
     getAll: () => Promise<Income[]>;
@@ -67,6 +70,8 @@ declare global {
       settings: {
         getAll: () => Promise<Record<string, string>>;
         update: (key: string, value: string) => Promise<void>;
+        onUpdate: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => void;
+        removeUpdateListener: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => void;
       };
       income: {
         getAll: () => Promise<Income[]>;

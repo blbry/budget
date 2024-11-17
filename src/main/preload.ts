@@ -42,6 +42,12 @@ const electronHandler = {
     getAll: () => ipcRenderer.invoke('settings:getAll'),
     update: (key: string, value: string) =>
       ipcRenderer.invoke('settings:update', key, value),
+    onUpdate: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => {
+      ipcRenderer.on('settings:updated', callback);
+    },
+    removeUpdateListener: (callback: (event: IpcRendererEvent, key: string, value: string) => void) => {
+      ipcRenderer.removeListener('settings:updated', callback);
+    },
   },
   income: {
     getAll: () => ipcRenderer.invoke('income:getAll'),

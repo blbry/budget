@@ -22,4 +22,18 @@ export function setupSettingsHandlers() {
       return stmt.run(key, value, key);
     })();
   });
+
+  ipcMain.on('settings:update', (event, key: string, value: string) => {
+    db.transaction(() => {
+      const stmt = db.prepare(`
+        INSERT INTO settings (key, value)
+        VALUES (?, ?)
+        ON CONFLICT(key) DO UPDATE SET value = excluded.value
+        WHERE key = ?
+      `);
+      stmt.run(key, value, key);
+      // Notify renderer of the change
+      event.sender.send('settings:updated', key, value);
+    })();
+  });
 }
