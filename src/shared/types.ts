@@ -102,3 +102,24 @@ export interface AccountFormData {
   wallet_addr?: string;
   balance?: number;
 }
+
+export interface Vehicle {
+  id: number;
+  name: string;
+  ownership_type: 'own' | 'lease' | 'loan';
+  value?: number;
+  payment_date?: number;
+  remaining_payments?: number;
+  payment_amount?: number;
+  description?: string;
+}
+
+export interface VehicleFormData {
+  name: string;
+  ownership_type: 'own' | 'lease' | 'loan';
+  value?: number;
+  payment_date?: number;
+  remaining_payments?: number;
+  payment_amount?: number;
+  description?: string;
+}

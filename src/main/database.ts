@@ -86,6 +86,17 @@ db.exec(`
     balance_updated TEXT
   );
 
+  CREATE TABLE IF NOT EXISTS vehicles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    ownership_type TEXT NOT NULL CHECK(ownership_type IN ('own', 'lease', 'loan')),
+    value REAL,
+    payment_date INTEGER,
+    remaining_payments INTEGER,
+    payment_amount REAL,
+    description TEXT
+  );
+
   -- Insert default categories if they don't exist
   INSERT OR IGNORE INTO categories (id, name, parent_id, type, is_default) VALUES
     -- Recreation

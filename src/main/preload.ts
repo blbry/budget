@@ -56,6 +56,12 @@ const electronHandler = {
     create: (data: AccountFormData) => ipcRenderer.invoke('accounts:create', data),
     delete: (id: number) => ipcRenderer.invoke('accounts:delete', id),
   },
+  vehicles: {
+    getAll: () => ipcRenderer.invoke('vehicles:getAll'),
+    create: (data: unknown) => ipcRenderer.invoke('vehicles:create', data),
+    update: (id: number, data: unknown) => ipcRenderer.invoke('vehicles:update', id, data),
+    delete: (id: number) => ipcRenderer.invoke('vehicles:delete', id),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
