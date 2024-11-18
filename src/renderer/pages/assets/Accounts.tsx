@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Account } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
 import { useCurrency } from '@/renderer/components/CurrencyProvider';
+import { useDate } from '@/renderer/components/DateProvider';
 import {
   Table,
   TableBody,
@@ -16,6 +17,7 @@ export default function Accounts() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { formatAmount } = useCurrency();
+  const { formatDate } = useDate();
 
   const loadAccounts = async () => {
     const accts = await window.electron.accounts.getAll();
@@ -57,7 +59,7 @@ export default function Accounts() {
               <TableCell className="capitalize">{account.type}</TableCell>
               <TableCell>{formatAmount(account.balance)}</TableCell>
               <TableCell>
-                {new Date(account.balance_updated).toLocaleDateString()}
+                {formatDate(account.balance_updated)}
               </TableCell>
               <TableCell>
                 <Button

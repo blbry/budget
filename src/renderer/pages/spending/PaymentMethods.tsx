@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { PaymentMethod } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
 import { useCurrency } from '@/renderer/components/CurrencyProvider';
+import { useDate } from '@/renderer/components/DateProvider';
 import {
   Table,
   TableBody,
@@ -33,6 +34,7 @@ export default function PaymentMethods() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const { formatAmount } = useCurrency();
+  const { formatDate } = useDate();
 
   const loadPaymentMethods = async () => {
     const methods = await window.electron.paymentMethods.getAll();
@@ -86,9 +88,14 @@ export default function PaymentMethods() {
               <TableCell className="capitalize">{method.type}</TableCell>
               <TableCell>{method.name}</TableCell>
               <TableCell>
-                {method.type === 'credit' && method.statementDate != null
-                  ? `${method.statementDate}${getOrdinalSuffix(method.statementDate)}`
-                  : '-'}
+                {method.statementDate ? (
+                  <span>
+                    {method.statementDate}
+                    {getOrdinalSuffix(method.statementDate)}
+                    {' '}
+                    ({formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), method.statementDate))})
+                  </span>
+                ) : '-'}
               </TableCell>
               <TableCell>
                 {method.type === 'credit' && method.annualFee != null

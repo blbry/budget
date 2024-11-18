@@ -2,6 +2,8 @@
 /* eslint-disable promise/catch-or-return */
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/renderer/components/ThemeProvider';
+import { useCurrency } from '@/renderer/components/CurrencyProvider';
+import { useDate } from '@/renderer/components/DateProvider';
 import {
   Select,
   SelectContent,
@@ -12,12 +14,11 @@ import {
 import { Button } from '@/renderer/components/button';
 import { UnitsIcon } from '@/renderer/components/icons/UnitsIcon';
 import { Alert, AlertDescription } from '@/renderer/components/alert';
-import { useCurrency } from '@/renderer/components/CurrencyProvider';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
   const [version, setVersion] = useState<string>('');
-  const [dateFormat, setDateFormat] = useState('MM/DD/YYYY');
+  const { dateFormat, setDateFormat } = useDate();
   const [currencyFormat, setCurrencyFormat] = useState('USD');
   const [location, setLocation] = useState('NY');
   const { setCurrencyFormat: setGlobalCurrencyFormat } = useCurrency();
@@ -26,7 +27,6 @@ export default function Settings() {
     const loadSettings = async () => {
       const settings = await window.electron.settings.getAll();
       setTheme(settings.theme as 'light' | 'dark' | 'system');
-      setDateFormat(settings.dateFormat);
       setCurrencyFormat(settings.currencyFormat);
       setLocation(settings.location);
     };

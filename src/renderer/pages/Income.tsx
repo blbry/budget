@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { format } from 'date-fns';
 import { Income, MonthlyTotals } from '@/shared/types';
 import { Button } from '@/renderer/components/button';
 import { useCurrency } from '@/renderer/components/CurrencyProvider';
+import { useDate } from '@/renderer/components/DateProvider';
 import {
   Table,
   TableBody,
@@ -25,6 +25,7 @@ export default function IncomePage() {
     amount: number;
   } | null>(null);
   const { formatAmount } = useCurrency();
+  const { formatMonthYear } = useDate();
 
   const loadIncomeSources = async () => {
     const sources = await window.electron.income.getAll();
@@ -99,7 +100,7 @@ export default function IncomePage() {
     }
   };
 
-  const currentMonthYear = format(new Date(), 'MMMM, yyyy');
+  const currentMonthYear = formatMonthYear(new Date());
 
   return (
     <div className="p-6">

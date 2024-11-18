@@ -91,16 +91,13 @@ export default function Vehicles() {
               </TableCell>
               <TableCell>
                 {vehicle.payment_amount && vehicle.payment_date ? (
-                  <span className="flex items-center gap-1">
+                  <span>
                     {formatAmount(vehicle.payment_amount)}
-                    <span className="ml-1">
-                      ({vehicle.payment_date}
-                      {getOrdinalSuffix(vehicle.payment_date)})
-                    </span>
+                    {' '}
+                    ({vehicle.payment_date}
+                    {getOrdinalSuffix(vehicle.payment_date)})
                   </span>
-                ) : (
-                  '-'
-                )}
+                ) : '-'}
               </TableCell>
               <TableCell>
                 {vehicle.remaining_payments ?? '-'}
