@@ -9,7 +9,11 @@ interface NavItem {
 
 function Sidebar() {
   const location = useLocation();
-  const [expandedSections, setExpandedSections] = useState<string[]>([]);
+  const [expandedSections, setExpandedSections] = useState<string[]>([
+    'assets',
+    'spending',
+    'insights'
+  ]);
 
   const navItems: NavItem[] = [
     { path: '/', label: 'Dashboard' },
